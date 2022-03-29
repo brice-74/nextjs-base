@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --top-nav-height: 64px;
+  --side-nav-width: 160px;
+
+  --primary-dark: #33a4b1;
+  --primary: #40c9d8;
+  --secondary: #C9FFD5;
+  --tertiary: #FFFFCB;
+
+  --success: #6bf150;
+  --warning: #ecea64;
+  --danger: #d82626;
+
+  --light-1-op: #f4fcfd8a;
+  --light-1: #f4fcfd;
+  --medium-1: #727a7a;
+  --dark-1: #1a1f1f;
+}
+
+svg > path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+[data-theme='dark'] {
+  --primary: rgb(216, 31, 223);
+
+  --light-1: #1a1f1f;
+  --dark-1: #f4fcfd;
+}
+
+.bg-layout {
+  background: 
+    radial-gradient(100% 150% at 50% 225%, var(--primary), transparent),
+    var(--light-1)
+  ;
+} 
+
+.bg-top-layout {
+  background: 
+    radial-gradient(140% 200% at 50% -100%, var(--secondary), transparent),
+    var(--primary)
+  ;
+}
