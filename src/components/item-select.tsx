@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import clsx from "clsx";
 
 import { useOnClickOutside } from "@utils/dom-events";
@@ -16,6 +16,7 @@ type ItemSelectProps = {
   itemsClassName?: string
   defaultActive?: ItemOptionValue
   onSelect?: (val: ItemOptionValue) => void
+  onOptionVisible?: (val: boolean) => void
 }
 
 function ItemSelect({
@@ -25,9 +26,14 @@ function ItemSelect({
   options = [],
   defaultActive,
   onSelect,
+  onOptionVisible,
   children,
 }: ItemSelectProps & ChildrenProps) {
   const [optionsVisible, setOptionsVisible] = useState(false);
+
+  useEffect(() => {
+    onOptionVisible?.(optionsVisible)
+  }, [optionsVisible])
 
   const divRef = useRef<HTMLDivElement>(null);
 

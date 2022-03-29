@@ -46,9 +46,11 @@ function TopNavigation() {
           <SunSVG className="fill-transparent w-full h-full" />
         </ItemSelect>
         <Button
-          as="button"
-          className="bg-th-primary text-th-light-1 py-1 px-4 rounded-l-[10px]
-          hover:bg-th-primary-dark"
+          as="link"
+          href={loginPATH}
+          className={clsx(`bg-th-primary text-th-light-1 py-1 px-4 rounded-l-[10px]
+          hover:bg-th-primary-dark`,
+          asPath === loginPATH ? "bg-th-primary-dark" : null)}
         >
           Login
         </Button>

@@ -1,5 +1,9 @@
+import {v4 as uuidv4} from "uuid"
+
 enum StorageKey {
-  Token = "TOKEN_KEY",
+  Access = "ACCESS_TOKEN_KEY",
+  Refresh = "REFRESH_TOKEN_KEY",
+  Session = "SESSION_ID",
 }
 
 function saveInStorage(key: StorageKey, value: string): void {
@@ -19,4 +23,15 @@ function deleteFromStorage(key: StorageKey): void {
   return localStorage.removeItem(key);
 }
 
-export { saveInStorage, getFromStorage, deleteFromStorage, StorageKey };
+function getOrCreateSession(): string {
+  const id = getFromStorage(StorageKey.Session)
+  if (id === null) {
+    const uuid = uuidv4()
+    saveInStorage(StorageKey.Session, uuid)
+    return uuid
+  }else{
+    return id
+  }
+}
+
+export { getOrCreateSession, saveInStorage, getFromStorage, deleteFromStorage, StorageKey };

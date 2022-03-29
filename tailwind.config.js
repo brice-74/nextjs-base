@@ -19,8 +19,11 @@ module.exports = {
         'th-tertiary': 'var(--tertiary)',
 
         'th-success': 'var(--success)',
+        'th-success-light': 'var(--success-light)',
         'th-warning': 'var(--warning)',
+        'th-warning-light': 'var(--warning-light)',
         'th-danger': 'var(--danger)',
+        'th-danger-light': 'var(--danger-light)',
 
         'th-light-1-op': 'var(--light-1-op)',
         'th-light-1': 'var(--light-1)',

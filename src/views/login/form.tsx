@@ -14,7 +14,6 @@ type FormProps = {
 type FormData = {
   email: string
   password: string
-  profilName: string
 };
 
 const formSchema = yup
@@ -33,10 +32,6 @@ const formSchema = yup
       .matches(/^(?=.*[A-Z])/, 'Password must contain at least one uppercase character')
       .matches(/^(?=.*[0-9])/, 'Password must contain at least one number')
       .matches(/^(?=.*[=|!@#$%^&(){}[\]:;<>,.?\\/~_+-])/, 'Password must contain at least one special character'),
-    profilName: yup
-      .string()
-      .required("Pseudo is required")
-      .max(32, "Email must have maximum of 32 characters"),
   }) 
   .required();
 
@@ -68,13 +63,6 @@ function Form({ onSubmit, loading = false, error = false, errorMessage }: FormPr
         type="password"
         placeholder="Enter your password"
         error={errors.password?.message}
-      />
-
-      <Field
-        {...register("profilName")}
-        label="Profile Name"
-        placeholder="Enter your profile name"
-        error={errors.profilName?.message}
         className="mb-10"
       />
 
@@ -84,7 +72,7 @@ function Form({ onSubmit, loading = false, error = false, errorMessage }: FormPr
         className="py-3 px-8 text-th-light-1 bg-th-primary rounded-[10px]
         hover:bg-th-primary-dark"
       >
-        Register
+        Login
       </Button>
     </form>
   );

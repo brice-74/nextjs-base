@@ -11,9 +11,12 @@
   --secondary: #C9FFD5;
   --tertiary: #FFFFCB;
 
-  --success: #6bf150;
-  --warning: #ecea64;
+  --success: #45b42f;
+  --success-light: #c3f3ba;
+  --warning: #cac71f;
+  --warning-light: #fdfcb4;
   --danger: #d82626;
+  --danger-light: #f0d4d4;
 
   --light-1-op: #f4fcfd8a;
   --light-1: #f4fcfd;

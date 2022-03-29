@@ -1,7 +1,9 @@
 import { useState } from "react"
 
 const GraphQLErrors = new Map<string, string>([
-  ["Duplicate email", "Account already exist"]
+  ["Duplicate email", "Account already exist"],
+  ["User not found", "Account not exist"],
+  ["incorrect password", "Password or email are incorect"]
 ]);
 
 function useMutationErrorHandling(): MutationErrorHandling {
@@ -40,3 +42,4 @@ type MutationError = {
 }
 
 export { useMutationErrorHandling };
+export type { MutationErrorHandling }
