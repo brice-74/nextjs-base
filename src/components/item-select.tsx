@@ -33,7 +33,7 @@ function ItemSelect({
 
   useEffect(() => {
     onOptionVisible?.(optionsVisible)
-  }, [optionsVisible])
+  }, [optionsVisible, onOptionVisible])
 
   const divRef = useRef<HTMLDivElement>(null);
 
