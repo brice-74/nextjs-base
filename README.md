@@ -19,7 +19,7 @@ npm install
 
 #### Development
 
-:point_right: Copy the `.env.example` file in a new `.env.development` file and replace path to the json model.
+:point_right: Copy the `.env.example` file in a new `.env.development` file.
 
 :runner: Run development application:
 
@@ -28,7 +28,7 @@ npm run dev
 ````
 #### Production
 
-:point_right: Copy the `.env.example` file in a new `.env.production` file and replace path to the json model.
+:point_right: Copy the `.env.example` file in a new `.env.production` file.
 
 :hammer: Build production application:
 
