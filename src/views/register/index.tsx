@@ -1,9 +1,20 @@
+import { useMe } from "@data/me";
 import { useLogin } from "@data/login";
 import { registerUserAccount } from "@data/register";
+import { RoleObj } from "@types";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useMutation } from "react-query";
 import { Form, FormData } from "./form";
 
 function Register() {
+  const { can } = useMe()
+  const router = useRouter()
+
+  useEffect(() => {
+    !can(RoleObj.ROLE_ANONYMOUS) ? router.replace("/") : null
+  }, [can, router])
+
   const {mut: loginMut, mutErr} = useLogin({redirectTo: "/"})
   let passwordInput:string
 

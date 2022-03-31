@@ -3,14 +3,21 @@ import { useState } from "react"
 const GraphQLErrors = new Map<string, string>([
   ["Duplicate email", "Account already exist"],
   ["User not found", "Account not exist"],
-  ["incorrect password", "Password or email are incorect"]
+  ["incorrect password", "Password or email are incorect"],
+  ["Token is expired", "Token is expired"]
 ]);
 
-function useMutationErrorHandling(): MutationErrorHandling {
+function useGQLErrorHandling(): MutationErrorHandling {
   const [message, setMessage] = useState<string>()
 
   const handle = (err: MutationError) => {
-    const ServerMsg = err.response.errors[0].extensions.message
+    let ServerMsg: string
+    if (err.response.error === undefined) {
+      ServerMsg = err.response.errors[0].extensions.message
+    } else {
+      ServerMsg = err.response.error
+    }
+
     const ClientMsg = GraphQLErrors.get(ServerMsg)
 
     setMessage(ClientMsg ?? "Error Unexpected")
@@ -27,6 +34,8 @@ type MutationErrorHandling = {
 
 type MutationError = {
   response: {
+    error: undefined
+    status: undefined
     errors: [
       {
         message: string
@@ -39,7 +48,13 @@ type MutationError = {
       }
     ]
   }
+} | {
+  response: {
+    errors: undefined
+    error: string
+    status: number
+  }
 }
 
-export { useMutationErrorHandling };
+export { useGQLErrorHandling };
 export type { MutationErrorHandling }

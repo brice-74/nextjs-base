@@ -16,3 +16,4 @@ enum Role {
 }
 
 export type { UserAccount, Role }
+export { Role as RoleObj}

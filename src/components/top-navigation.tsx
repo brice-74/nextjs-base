@@ -7,6 +7,7 @@ import { SpaceNB } from "@utils/unicode";
 import { SunSVG } from "./svg/sun";
 import { useRouter } from "next/router";
 import clsx from "clsx";
+import { useLogout, useMe } from "@data/me";
 
 const themesOptions: ItemSelectOption[] = [
   [`🌝${SpaceNB(2)}light`, "light"],
@@ -18,7 +19,9 @@ const loginPATH = "/auth/login"
 
 function TopNavigation() {
   const navCtx = useContext(SideNavContext)
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme()
+  const { me } = useMe()
+  const logout = useLogout()
 
   const { asPath } = useRouter();
   
@@ -45,24 +48,37 @@ function TopNavigation() {
         >
           <SunSVG className="fill-transparent w-full h-full" />
         </ItemSelect>
-        <Button
-          as="link"
-          href={loginPATH}
-          className={clsx(`bg-th-primary text-th-light-1 py-1 px-4 rounded-l-[10px]
-          hover:bg-th-primary-dark`,
-          asPath === loginPATH ? "bg-th-primary-dark" : null)}
-        >
-          Login
-        </Button>
-        <Button
-          as="link"
-          href={registerPATH}
-          className={clsx(`bg-th-primary text-th-light-1 py-1 px-4 rounded-r-[10px]
-          hover:bg-th-primary-dark`,
-          asPath === registerPATH ? "bg-th-primary-dark" : null)}
-        >
-          Register
-        </Button>
+        {me ? (
+          <Button
+            as="button"
+            className="bg-th-primary text-th-light-1 py-1 px-4 rounded-[10px]
+            hover:bg-th-primary-dark"
+            onClick={logout}
+          >
+            Logout
+          </Button>
+        ) : (
+          <div className="flex">
+            <Button
+              as="link"
+              href={loginPATH}
+              className={clsx(`bg-th-primary text-th-light-1 py-1 px-4 rounded-l-[10px]
+              hover:bg-th-primary-dark`,
+              asPath === loginPATH ? "bg-th-primary-dark" : null)}
+            >
+              Login
+            </Button>
+            <Button
+              as="link"
+              href={registerPATH}
+              className={clsx(`bg-th-primary text-th-light-1 py-1 px-4 rounded-r-[10px]
+              hover:bg-th-primary-dark`,
+              asPath === registerPATH ? "bg-th-primary-dark" : null)}
+            >
+              Register
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )

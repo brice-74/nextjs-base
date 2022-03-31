@@ -1,9 +1,9 @@
 import { Tokens } from "@types";
-import { MutationErrorHandling, useMutationErrorHandling } from "@utils/graphql";
+import { useGQLErrorHandling } from "@utils/graphql";
 import { FormData } from "@views/login/form";
 import { gql } from "graphql-request";
 import { useRouter } from "next/router";
-import { useMutation, UseMutationResult } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { getClient } from "./graphql";
 import { getOrCreateSession, saveInStorage, StorageKey } from "./storage";
 
@@ -42,8 +42,9 @@ type LoginUserAccountResponse = {
   loginUserAccount: Tokens
 };
 
-function useLogin({redirectTo}: {redirectTo?: string}): UseLoginProps {
-  const mutErr = useMutationErrorHandling()
+function useLogin({redirectTo}: {redirectTo: string}) {
+  const queryClient = useQueryClient()
+  const mutErr = useGQLErrorHandling()
   const router = useRouter()
 
   const mut = useMutation(
@@ -59,19 +60,13 @@ function useLogin({redirectTo}: {redirectTo?: string}): UseLoginProps {
       onSuccess: (data) => {
         saveInStorage(StorageKey.Access, data.loginUserAccount.access)
         saveInStorage(StorageKey.Refresh, data.loginUserAccount.refresh)
-        if (redirectTo != undefined) {
-          router.push(redirectTo)
-        }
+        
+        router.replace(redirectTo).then(() => queryClient.resetQueries())
       }
     }
   );
 
   return { mut, mutErr }
-}
-
-type UseLoginProps = {
-  mut: UseMutationResult<LoginUserAccountResponse, unknown, FormData, unknown>
-  mutErr: MutationErrorHandling
 }
 
 export { loginUserAccount, useLogin }
