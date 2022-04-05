@@ -1,14 +1,13 @@
 import * as React from "react";
 import { Layout } from "@components";
+import { Home } from "@views/home";
 
-function Home() {
-  return (
-    <p></p>
-  );
+function HomePage() {
+  return <Home />
 }
 
-Home.getLayout = function getLayout(page: React.ReactElement) {
+HomePage.getLayout = function getLayout(page: React.ReactElement) {
   return <Layout>{page}</Layout>;
 };
 
-export default Home;
+export default HomePage;

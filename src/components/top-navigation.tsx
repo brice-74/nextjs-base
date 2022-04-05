@@ -7,7 +7,8 @@ import { SpaceNB } from "@utils/unicode";
 import { SunSVG } from "./svg/sun";
 import { useRouter } from "next/router";
 import clsx from "clsx";
-import { useLogout, useMe } from "@data/me";
+import { useLogout } from "@data/me";
+import { MeContext } from "@context/me";
 
 const themesOptions: ItemSelectOption[] = [
   [`🌝${SpaceNB(2)}light`, "light"],
@@ -19,11 +20,11 @@ const loginPATH = "/auth/login"
 
 function TopNavigation() {
   const navCtx = useContext(SideNavContext)
-  const { theme, setTheme } = useTheme()
-  const { me } = useMe()
+  const user = useContext(MeContext)
+  
   const logout = useLogout()
-
   const { asPath } = useRouter();
+  const { theme, setTheme } = useTheme()
   
   return (
     <div className="z-10 fixed w-full backdrop-blur">
@@ -48,7 +49,7 @@ function TopNavigation() {
         >
           <SunSVG className="fill-transparent w-full h-full" />
         </ItemSelect>
-        {me ? (
+        {user?.me ? (
           <Button
             as="button"
             className="bg-th-primary text-th-light-1 py-1 px-4 rounded-[10px]

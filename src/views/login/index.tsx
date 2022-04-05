@@ -2,16 +2,17 @@ import { useMe } from "@data/me";
 import { useLogin } from "@data/login";
 import { RoleObj } from "@types";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Form } from "./form";
+import { MeContext } from "@context/me";
 
 function Login() {
-  const { can } = useMe()
+ /*  const user = useContext(MeContext) */
   const router = useRouter()
 
-  useEffect(() => {
-    !can(RoleObj.ROLE_ANONYMOUS) ? router.replace("/") : null
-  }, [can, router])
+  /* useEffect(() => {
+    !user?.can(RoleObj.ROLE_ANONYMOUS) ? router.replace("/") : null
+  }, [user?.can, router]) */
 
   const { mut, mutErr } = useLogin({redirectTo: "/"})
 

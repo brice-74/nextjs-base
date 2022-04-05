@@ -13,7 +13,11 @@ function useGQLErrorHandling(): MutationErrorHandling {
   const handle = (err: MutationError) => {
     let ServerMsg: string
     if (err.response.error === undefined) {
-      ServerMsg = err.response.errors[0].extensions.message
+      if (err.response.errors[0].extensions === undefined) {
+        ServerMsg = err.response.errors[0].message
+      } else {
+        ServerMsg = err.response.errors[0].extensions.message
+      }
     } else {
       ServerMsg = err.response.error
     }

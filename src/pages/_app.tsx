@@ -7,6 +7,7 @@ import { NextPage } from "next";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { SideNavContextProvider } from "@context/side-nav";
 import { FadeTransition, PageTransition } from "@components";
+import { MeContextProvider } from "@context/me";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
@@ -22,15 +23,17 @@ const queryClient = new QueryClient({
 
 function App(props: AppPropsWithLayout) {
   return (
-    <ThemeProvider>
-      <SideNavContextProvider isOpen={true}>
-        <QueryClientProvider client={queryClient}>
-          <PageTransition {...FadeTransition}>
-            <InnerApp {...props} />
-          </PageTransition>
-        </QueryClientProvider>
-      </SideNavContextProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <MeContextProvider>
+        <ThemeProvider>
+          <SideNavContextProvider isOpen={true}>
+            <PageTransition {...FadeTransition}>
+              <InnerApp {...props} />
+            </PageTransition>
+          </SideNavContextProvider>
+        </ThemeProvider>
+      </MeContextProvider>
+    </QueryClientProvider>
   );
 }
 
