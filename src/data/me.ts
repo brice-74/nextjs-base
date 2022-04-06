@@ -1,11 +1,11 @@
 import { Role, RoleObj, UserAccount } from "@types"
 import { gql } from "graphql-request"
-import { useRouter } from "next/router"
 import { useCallback, useEffect } from "react"
-import { useQuery, useQueryClient } from "react-query"
+import { useQuery } from "react-query"
 import { getClient } from "./graphql"
+import { useLogout } from "./logout"
 import { useRefresh } from "./refresh"
-import { deleteFromStorage, getFromStorage, StorageKey } from "./storage"
+import { getFromStorage, StorageKey } from "./storage"
 
 const meQuery = gql`
   {
@@ -79,17 +79,4 @@ function useMe() {
   return { me: user, can }
 }
 
-function useLogout() {
-  const queryClient = useQueryClient()
-  const router = useRouter()
-
-  return () => {
-    deleteFromStorage(StorageKey.Access)
-    deleteFromStorage(StorageKey.Refresh)
-    deleteFromStorage(StorageKey.Session)
-
-    router.replace("/auth/login").then(() => queryClient.resetQueries())
-  }
-}
-
-export { useMe, useLogout }
+export { useMe }
