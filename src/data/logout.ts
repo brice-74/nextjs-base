@@ -1,12 +1,12 @@
 import { gql } from "graphql-request"
 import { useRouter } from "next/router"
-import { useMutation, useQuery, useQueryClient } from "react-query"
+import { useMutation, useQueryClient } from "react-query"
 import { getClient } from "./graphql"
 import { deleteFromStorage, StorageKey } from "./storage"
 
 const logoutUserQuery = gql`
-  {
-    logoutQuery
+  mutation logoutUserAccount() {
+    logoutUserAccount
   }
 `
 
@@ -26,14 +26,17 @@ function useLogout() {
     async () => {
       return logoutUserAccount()
     },
+    {
+      onSuccess: () => {
+        deleteFromStorage(StorageKey.Access)
+        deleteFromStorage(StorageKey.Refresh)
+        deleteFromStorage(StorageKey.Session)
+      }
+    }
   );
 
   return () => {
     mut.mutate()
-    
-    deleteFromStorage(StorageKey.Access)
-    deleteFromStorage(StorageKey.Refresh)
-    deleteFromStorage(StorageKey.Session)
 
     router.replace("/auth/login").then(() => queryClient.resetQueries())
   }
