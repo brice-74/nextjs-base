@@ -7,8 +7,8 @@ import { SpaceNB } from "@utils/unicode";
 import { SunSVG } from "./svg/sun";
 import { useRouter } from "next/router";
 import clsx from "clsx";
-import { useLogout } from "@data/me";
 import { MeContext } from "@context/me";
+import { useLogout } from "@data/logout";
 
 const themesOptions: ItemSelectOption[] = [
   [`🌝${SpaceNB(2)}light`, "light"],
