@@ -1,3 +1,4 @@
+import { Paginator } from "@components"
 import { sessionsFromAuth } from "@data/session"
 import clsx from "clsx"
 import { useMemo, useState } from "react"
@@ -21,6 +22,12 @@ function Sessions() {
     return data?.sessionsFromAuth.list ?? []
   }, [data])
 
+  const pagesTotal = useMemo(() => {
+    const total = data?.sessionsFromAuth.total ?? 0
+
+    return Math.ceil(total / pageLimit)
+  }, [data])
+
   return (
     <div>
       <p className="mb-10 font-black text-3xl">Sessions</p>
@@ -40,7 +47,7 @@ function Sessions() {
                     "px-4 py-2 rounded-[10px] inline-block text-th-light-1 ml-auto",
                     item.active ? "bg-th-success" : "bg-th-danger"
                   )}>
-                    {item.active ? "active" : "inactive"}
+                    {item.active ? "active" : "expired"}
                   </p>
                 </div>
               </div> 
@@ -48,6 +55,15 @@ function Sessions() {
           )
         })}
       </div>
+      {pagesTotal > 0 ? (
+        <div className="flex justify-center p-12">
+          <Paginator
+            pagesTotal={pagesTotal}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        </div>
+      ) : null}
     </div>
   )
 }
